@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+
+<head>
+  <meta charset="UTF-8">
+  <title>ML API</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+  <style>
+    .centered-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Additional styling for the container */
+   }
+    .background-image-container {
+            background-image: url('/static/92479airplane-wallpaper-2.jpg') !important;
+            background-size: cover;
+            /* Add any other styling for the element here */
+        }
+    .bold1{
+      /* size: 10px !important; */
+      background-color: black;
+      color: white;
+      /* margin-right: -80px;
+      margin-right:0px ; */
+      /* padding-top: 150px !important; */
+
+      /* length:20px; */
+    }
+  </style>
+
+</head>
+
+<body class=" centered-container background-image-container" >
+  <div>
+  <!-- <img src="/92479airplane-wallpaper-2.jpg" alt="Image Description"> -->
+  <div>
+    <h1>Flight Price Prediction</h1>
+    <br>
+    <br>
+    <!-- Main Input For Receiving Query to our ML -->
+    <form action="{{ url_for('predict')}}" method="post">
+      <!-- <input type="text" name="airline" placeholder="airline" required="required" /> -->
+      <table>
+        <tr>
+          <th>Categories</th>
+          <th>Enter the Details</th>
+        </tr>
+        <tr>
+          <td>Airline</td>
+          <td>
+            <select name="airline">
+              <option value="0">Air Asia</option>
+              <option value="1">Air India</option>
+              <option value="2">Go_First</option>
+              <option value="3">Indigo</option>
+              <option value="4">Spicejet</option>
+              <option value="5">Vistara</option>
+            </select>
+          </td>
+        </tr>
+
+        <!-- <input type="text" name="flight" placeholder="flight" required="required" /> -->
+        <!-- <input type="text" name="source_city" placeholder="source_city" required="required" /> -->
+        <tr>
+          <td>Source City</td>
+          <td>
+            <select name="source_city">
+              <option value="2">Delhi</option>
+              <option value="5">Mumbai</option>
+              <option value="0">Bangalore</option>
+              <option value="4">Kolkata</option>
+              <option value="3">Hyderabad</option>
+              <option value="1">Chennai</option>
+            </select>
+          </td>
+        </tr>
+
+        <!-- <input type="text" name="departure_time" placeholder="departure_time" required="required" /> -->
+        <tr>
+          <td>Departure Time</td>
+          <td>
+            <select name="departure_time">
+              <option value="2">Evening</option>
+              <option value="1">Early_Morning</option>
+              <option value="4">Morning</option>
+              <option value="0">Afternoon</option>
+              <option value="5">Night</option>
+              <option value="3">Late_Night</option>
+            </select>
+          </td>
+        </tr>
+
+        <!-- <input type="text" name="stops" placeholder="stops" required="required" /> -->
+        <tr>
+          <td>Stops</td>
+          <td>
+            <select name="stops">
+              <option value="2">zero</option>
+              <option value="0">one</option>
+              <option value="1">two_or_more</option>
+            </select>
+          </td>
+        </tr>
+
+        <!-- <input type="text" name="arrival_time" placeholder="arrival_time" required="required" /> -->
+        <tr>
+          <td>Arrival Time</td>
+          <td>
+            <select name="arrival_time">
+              <option value="2">Evening</option>
+              <option value="1">Early_Morning</option>
+              <option value="4">Morning</option>
+              <option value="0">Afternoon</option>
+              <option value="5">Night</option>
+              <option value="3">Late_Night</option>
+            </select>
+          </td>
+        </tr>
+
+        <!-- <input type="text" name="destination_city" placeholder="destination_city" required="required" /> -->
+        <tr>
+          <td>Destination City</td>
+          <td>
+            <select name="destination_city">
+              <option value="2">Delhi</option>
+              <option value="5">Mumbai</option>
+              <option value="0">Bangalore</option>
+              <option value="4">Kolkata</option>
+              <option value="3">Hyderabad</option>
+              <option value="1">Chennai</option>
+            </select>
+          </td>
+        </tr>
+
+        <!-- <input type="text" name="class" placeholder="class" required="required" /> -->
+        <tr>
+          <td>Class</td>
+          <td>
+            <select name="class">
+              <option value="0">Economy</option>
+              <option value="1">Business</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Duration</td>
+          <td><input type="text" name="duration" placeholder="duration" required="required" /></td>
+        </tr>
+
+        <tr>
+          <td>Days Left</td>
+          <td><input type="text" name="days_left" placeholder="days_left" required="required" /></td>
+        </tr>
+      </table>
+
+      <br>
+      <br>
+      <br>
+      <br>
+      
+      <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+      <br>
+      <br>
+      <div >
+        <span class="bold1"> {{ prediction_text }}</span>
+       
+      </div>
+      
+    </form>
+    
+
+    <br>
+    <br >
+    
+
+  </div>
+ 
+    
+
+</div>
+</body>
+
+</html>
+
+
+<!-- 
+
+<script>
+  document.getElementById("color-dropdown").addEventListener("change", function() {
+      var selectedColor = this.value;
+      var resultDiv = document.getElementById("result");
+      
+      if (selectedColor === "1") {
+          resultDiv.textContent = "You chose Red!";
+      } else if (selectedColor === "2") {
+          resultDiv.textContent = "You chose Blue!";
+      } else if (selectedColor === "3") {
+          resultDiv.textContent = "You chose Green!";
+      } else if (selectedColor === "4") {
+          resultDiv.textContent = "You chose Yellow!";
+      } else {
+          resultDiv.textContent = "Select a color.";
+      }
+  });
+</script> -->
